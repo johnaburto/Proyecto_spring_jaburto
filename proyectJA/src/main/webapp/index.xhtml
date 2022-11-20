@@ -1,0 +1,84 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Eso es!</title>
+    </h:head>
+    <h:body>
+        <p:growl id="growl" globalOnly="true" showDetail="true"/>
+        <h:form id="frmPrincipal">
+            <p:panel header="Registro de Territorios">
+                <p:panelGrid columns="6" columnClasses="ui-grid-col-2">
+
+                    <h:outputText value="Identificador"/>
+                    <p:inputText id="id" value="#{baseBackbean.id}"/>
+
+                    <h:outputText value="Nombre"/>
+                    <p:inputText id="nombre" value="#{baseBackbean.nombre}"/>
+
+                    <h:outputText value="Identificador"/>
+                    <p:selectOneMenu id="somRegion" value="#{baseBackbean.somRegion}">
+                        <f:selectItems var="a" itemLabel="#{a.idRegion} - #{a.descRegion}" itemValue="#{a.idRegion}"
+                                       value="#{baseBackbean.regiones}"/>
+                    </p:selectOneMenu>
+
+                </p:panelGrid>
+            </p:panel>
+            <p:commandButton id="btnGuardar" value="Guardar" update="formTablaTerritorios formTablaClientes frmPrincipal"
+                             actionListener="#{baseBackbean.guardar()}"/>
+        </h:form>
+
+        <h:form id="formTablaTerritorios">
+            <p:dataTable id="territorios" var="c"
+                         value="#{baseBackbean.territorios}"
+                         rowKey="#{c.idTerritorio}"
+                         rows="10"
+                         paginatorPosition="top"
+                         paginator="true">
+                <f:facet name="header">
+                    Listado de territorios
+                </f:facet>
+
+                <p:column headerText="Id">
+                    <h:outputText value="#{c.idTerritorio}"/>
+                </p:column>
+                <p:column headerText="Descripcion Territorio">
+                    <h:outputText value="#{c.descTerritorio}"/>
+                </p:column>
+                <p:column headerText="Region">
+                    <h:outputText value="#{c.region.descRegion}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <h:form id="formTablaClientes">
+            <p:dataTable id="clientes" var="c"
+                         value="#{baseBackbean.clientes}"
+                         rowKey="#{c.id}"
+                         rows="10"
+                         paginatorPosition="top"
+                         paginator="true">
+                <f:facet name="header">
+                    Listado de clientes (desde API)
+                </f:facet>
+
+                <p:column headerText="Compañia">
+                    <h:outputText value="#{c.nombreCompanhia}"/>
+                </p:column>
+                <p:column headerText="Nombre Contacto">
+                    <h:outputText value="#{c.nombreContacto}"/>
+                </p:column>
+                <p:column headerText="Titulo del Contacto">
+                    <h:outputText value="#{c.tituloContacto}"/>
+                </p:column>
+                <p:column headerText="Direccion">
+                    <h:outputText value="#{c.direccion}"/>
+                </p:column>
+                <p:column headerText="Ciudad">
+                    <h:outputText value="#{c.ciudad}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</f:view>
